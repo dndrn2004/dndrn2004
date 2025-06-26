@@ -135,7 +135,9 @@ class App{
                 obj.position.copy(pos);
                 college.add( obj );
                 
+		setTimeout(() => {
                 self.loadingBar.visible = false;
+		}, 1000); // Delay for 1 second to show loading bar
 			
                 self.setupXR();
 			},
