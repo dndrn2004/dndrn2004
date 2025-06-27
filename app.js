@@ -53,9 +53,7 @@ class App{
         this.stats = new Stats();
 		container.appendChild( this.stats.dom );
         
-		this.loadingBar = new LoadingBar();
-		this.loadingBar.visible = true;
-		
+				
 		this.loadCollege();
         
         this.immersive = false;
