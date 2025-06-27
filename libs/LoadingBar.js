@@ -6,7 +6,7 @@ class LoadingBar {
 		this.domElement.style.left = '0';
 		this.domElement.style.width = '100%';
 		this.domElement.style.height = '100%';
-		this.domElement.style.background = '#000'; // Dark gray background
+		this.domElement.style.background = '#222'; // Dark gray background
 		this.domElement.style.opacity = '0.9';
 		this.domElement.style.display = 'flex';
 		this.domElement.style.alignItems = 'center';
@@ -15,7 +15,7 @@ class LoadingBar {
 
 		// Outer base
 		const barBase = document.createElement("div");
-		barBase.style.background = '#111'; // medium gray
+		barBase.style.background = '#444'; // medium gray
 		barBase.style.width = '50%';
 		barBase.style.minWidth = '250px';
 		barBase.style.borderRadius = '10px';
@@ -25,11 +25,10 @@ class LoadingBar {
 
 		// Progress bar
 		const bar = document.createElement("div");
-		bar.style.background = '#ff00ff'; // Neon pink
-		bar.style.boxShadow = '0 0 15px #fff, 0 0 30px #ff00ff, 0 0 60px #ff00ff';
+		bar.style.background = '#ff00ff'; // neon pink
+		bar.style.boxShadow = '0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff';
 		bar.style.width = '0%';
 		bar.style.height = '100%';
-		bar.style.transition = 'width 0.2s ease, box-shadow 0.3s ease';
 		bar.style.borderRadius = '10px';
 		bar.style.transition = 'width 0.2s ease-out'; // smooth transition
 
