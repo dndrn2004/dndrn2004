@@ -12,6 +12,20 @@ import { XRControllerModelFactory } from './libs/three/jsm/XRControllerModelFact
 
 class App{
 	constructor(){
+		this.loadingBar = new LoadingBar();
+this.loadingBar.visible = true;
+
+// TEST ONLY: Simulate progress animation
+let progress = 0;
+const interval = setInterval(() => {
+  progress += 0.01;
+  this.loadingBar.progress = progress;
+  if (progress >= 1) {
+    clearInterval(interval);
+    this.loadingBar.visible = false;
+  }
+}, 50);
+
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
 
