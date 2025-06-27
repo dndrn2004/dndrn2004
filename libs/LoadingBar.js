@@ -23,14 +23,14 @@ class LoadingBar {
 		barBase.style.overflow = 'hidden';
 		this.domElement.appendChild(barBase);
 
-		// Progress bar
+		// Progress bar (white with pink glow)
 		const bar = document.createElement("div");
-		bar.style.background = '#ff00ff'; // neon pink
-		bar.style.boxShadow = '0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff';
+		bar.style.background = '#ffffff'; // white bar
+		bar.style.boxShadow = '0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(255, 0, 255, 0.4)';
 		bar.style.width = '0%';
 		bar.style.height = '100%';
 		bar.style.borderRadius = '10px';
-		bar.style.transition = 'width 0.2s ease-out'; // smooth transition
+		bar.style.transition = 'width 0.2s ease-out';
 
 		barBase.appendChild(bar);
 		this.progressBar = bar;
