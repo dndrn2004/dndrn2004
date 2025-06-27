@@ -124,6 +124,14 @@ initAudio() {
 			function ( gltf ) {
 
                 const college = gltf.scene.children[0];
+				const mug = college.getObjectByName("mug");
+    				if (mug) {
+        				mug.userData.interactable = true;
+        				console.log("Mug found and marked as interactable:", mug);
+   				} else {
+       					 console.warn("No object named 'mug' found in the GLB");
+   				}
+
 				self.scene.add( college );
 				
 				college.traverse(function (child) {
@@ -179,17 +187,44 @@ initAudio() {
         
         const timeoutId = setTimeout( connectionTimeout, 2000 );
         
-        function onSelectStart( event ) {
-        
-            this.userData.selectPressed = true;
-        
-        }
+        function onSelectStart(event) {
+    		const controller = event.target;
+    		const tempMatrix = new THREE.Matrix4();
+    		tempMatrix.identity().extractRotation(controller.matrixWorld);
 
-        function onSelectEnd( event ) {
-        
-            this.userData.selectPressed = false;
-        
-        }
+    		const raycaster = new THREE.Raycaster();
+    		raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
+    		raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
+
+    		const intersects = raycaster.intersectObjects(self.scene.children, true);
+
+    		if (intersects.length > 0) {
+        	const object = intersects[0].object;
+        	if (object.userData.interactable && object.name === "mug") {
+            	console.log("Picked up mug:", object);
+
+            	// Attach to controller
+            	controller.attach(object);
+            	controller.userData.heldObject = object;
+        	}
+    	}
+
+    controller.userData.selectPressed = true;
+}
+
+        function onSelectEnd(event) {
+    		const controller = event.target;
+    		controller.userData.selectPressed = false;
+
+    		const heldObject = controller.userData.heldObject;
+    		if (heldObject) {
+        		// Drop the mug at current position
+        		self.scene.attach(heldObject); // reattach to scene
+        		heldObject.position.copy(heldObject.getWorldPosition(new THREE.Vector3()));
+        		heldObject.quaternion.copy(heldObject.getWorldQuaternion(new THREE.Quaternion()));
+        		controller.userData.heldObject = null;
+    			}	
+		}
         
         function onConnected( event ){
             clearTimeout( timeoutId );
