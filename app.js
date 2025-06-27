@@ -265,13 +265,15 @@ initAudio() {
 
         const geometry = new THREE.BufferGeometry().setFromPoints( [ new THREE.Vector3( 0, 0, 0 ), new THREE.Vector3( 0, 0, -1 ) ] );
 
+	const material = new THREE.LineBasicMaterial({ color: 0xffff00 });
         const line = new THREE.Line( geometry );
-        line.scale.z = 0;
+        line.scale.z = 5;
         
         const controllers = [];
         
         for(let i=0; i<=1; i++){
             const controller = this.renderer.xr.getController( i );
+            controller.add(line.clone());	
             controller.add( line.clone() );
             controller.userData.selectPressed = false;
             parent.add( controller );
