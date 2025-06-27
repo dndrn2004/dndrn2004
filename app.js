@@ -12,8 +12,6 @@ import { XRControllerModelFactory } from './libs/three/jsm/XRControllerModelFact
 
 class App{
 	constructor(){
-		this.loadingBar = new LoadingBar();
-		this.loadingBar.visible = true;
 		const container = document.createElement( 'div' );
 		document.body.appendChild( container );
 
@@ -31,7 +29,7 @@ class App{
 		this.scene = new THREE.Scene();
         this.scene.add( this.dolly );
         
-		const ambient = new THREE.HemisphereLight(0xff0000, 0x00ffff, 1.5);
+		const ambient = new THREE.HemisphereLight(0xFFFFFF, 0xAAAAAA, 0.8);
 		this.scene.add(ambient);
 
 		this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -53,7 +51,8 @@ class App{
         this.stats = new Stats();
 		container.appendChild( this.stats.dom );
         
-				
+		this.loadingBar = new LoadingBar();
+		
 		this.loadCollege();
         
         this.immersive = false;
@@ -136,9 +135,7 @@ class App{
                 obj.position.copy(pos);
                 college.add( obj );
                 
-		setTimeout(() => {
                 self.loadingBar.visible = false;
-		}, 1000); // Delay for 1 second to show loading bar
 			
                 self.setupXR();
 			},
