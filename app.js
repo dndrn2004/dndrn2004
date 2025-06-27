@@ -273,7 +273,7 @@ initAudio() {
         
         for(let i=0; i<=1; i++){
             const controller = this.renderer.xr.getController( i );
-controller.add(line.clone());	
+		controller.add(line.clone());	
             controller.add( line.clone() );
             controller.userData.selectPressed = false;
             parent.add( controller );
