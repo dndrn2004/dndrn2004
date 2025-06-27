@@ -10,6 +10,7 @@ import { CanvasUI } from './libs/CanvasUI.js';
 import { GazeController } from './libs/GazeController.js'
 import { XRControllerModelFactory } from './libs/three/jsm/XRControllerModelFactory.js';
 
+
 class App{
 	constructor(){
 		const container = document.createElement( 'div' );
@@ -19,6 +20,20 @@ class App{
         
 		this.camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.01, 500 );
 		this.camera.position.set( 0, 1.6, 0 );
+
+		this.listener = new THREE.AudioListener();
+		this.camera.add(this.listener);
+
+		// 👇 Load and play background music
+		this.sound = new THREE.Audio(this.listener);
+		const audioLoader = new THREE.AudioLoader();
+		audioLoader.load('./assets/audio/Pufino.mp3', (buffer) => {
+			this.sound.setBuffer(buffer);
+			this.sound.setLoop(true);
+			this.sound.setVolume(0.5);
+			this.sound.play();
+		});
+
         
         this.dolly = new THREE.Object3D(  );
         this.dolly.position.set(0, 0, 10);
