@@ -25,10 +25,11 @@ class LoadingBar {
 
 		// Progress bar
 		const bar = document.createElement("div");
-		bar.style.background = '#ff00ff';
-		bar.style.boxShadow = '0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 40px #ff00ff';
+		bar.style.background = '#ff00ff'; // neon pink
+		bar.style.boxShadow = '0 0 20px #ff00ff, 0 0 40px #ff00ff, 0 0 60px #ff00ff';
 		bar.style.width = '0%';
 		bar.style.height = '100%';
+		bar.style.transition = 'width 0.2s ease, box-shadow 0.3s ease';
 		bar.style.borderRadius = '10px';
 		bar.style.transition = 'width 0.2s ease-out'; // smooth transition
 
