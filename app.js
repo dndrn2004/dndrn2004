@@ -273,7 +273,7 @@ initAudio() {
         
         for(let i=0; i<=1; i++){
             const controller = this.renderer.xr.getController( i );
-            controller.add(line.clone());	
+controller.add(line.clone());	
             controller.add( line.clone() );
             controller.userData.selectPressed = false;
             parent.add( controller );
@@ -408,72 +408,6 @@ initAudio() {
             this.immersive = this.renderer.xr.isPresenting;
         }
         
-ChatGPT said:
-Great question! Yes, the render() method is already inside your App class in app.js — you're using it for rendering your scene in VR mode.
-
-🔍 To find the render() method in your app.js:
-Scroll to near the bottom of your App class, and you'll find this block:
-
-js
-Copy
-Edit
-render( timestamp, frame ){
-    const dt = this.clock.getDelta();
-
-    if (this.renderer.xr.isPresenting){
-        // ... movement logic, gaze interaction, infoboard display
-    }
-
-    if ( this.immersive != this.renderer.xr.isPresenting){
-        this.resize();
-        this.immersive = this.renderer.xr.isPresenting;
-    }
-
-    this.stats.update();
-    this.renderer.render(this.scene, this.camera);
-}
-✅ Where to Add the B Button Interaction Code
-Inside that render() method, just before this line:
-
-js
-Copy
-Edit
-this.stats.update();
-add this block:
-
-js
-Copy
-Edit
-// ✅ B button interaction to pick up/drop the mug
-this.controllers.forEach(controller => {
-    const gp = controller.gamepad;
-    if (gp && gp.buttons[1].pressed && !controller.userData.holding) {
-        const tempMatrix = new THREE.Matrix4().identity().extractRotation(controller.matrixWorld);
-        const raycaster = new THREE.Raycaster();
-        raycaster.ray.origin.setFromMatrixPosition(controller.matrixWorld);
-        raycaster.ray.direction.set(0, 0, -1).applyMatrix4(tempMatrix);
-
-        const intersects = raycaster.intersectObjects(this.scene.children, true);
-        if (intersects.length > 0) {
-            const object = intersects[0].object;
-            if (object.name === "mug" && object.userData.interactable) {
-                controller.attach(object);
-                controller.userData.holding = object;
-                console.log("Picked up mug with B button");
-            }
-        }
-    }
-
-    // Release on B release
-    if (gp && !gp.buttons[1].pressed && controller.userData.holding) {
-        const held = controller.userData.holding;
-        this.scene.attach(held);
-        held.position.copy(held.getWorldPosition(new THREE.Vector3()));
-        held.quaternion.copy(held.getWorldQuaternion(new THREE.Quaternion()));
-        controller.userData.holding = null;
-        console.log("Dropped mug");
-    }
-});
         this.stats.update();
 		this.renderer.render(this.scene, this.camera);
 	}
